@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cadastrar")
+@RequestMapping("/medico")
 public class MedicoController {
     private MedicoService medicoService;
 
@@ -18,7 +18,7 @@ public class MedicoController {
         this.medicoService = medicoService;
     }
 
-    @PostMapping("/medico")
+    @PostMapping("/cadastrar")
     @Transactional
     public void cadastrar(@RequestBody @Valid MedicoDTO dadosParaCadastro) {
         medicoService.cadastrarMedico(dadosParaCadastro);
