@@ -6,6 +6,7 @@ import med.voll.api.dto.DadosListagemMedico;
 import med.voll.api.service.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemMedico> mostrarMedicos(Pageable paginacao){
+    public Page<DadosListagemMedico> mostrarMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
         return medicoService.mostrarMedicos(paginacao);
     }
 }
