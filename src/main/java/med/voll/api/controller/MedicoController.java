@@ -1,6 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.dto.DadosAtualizarMedico;
 import med.voll.api.dto.DadosCadastroMedico;
 import med.voll.api.dto.DadosListagemMedico;
 import med.voll.api.service.MedicoService;
@@ -29,7 +30,13 @@ public class MedicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemMedico> mostrarMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
+    public Page<DadosListagemMedico> mostrarMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return medicoService.mostrarMedicos(paginacao);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizarDadosMedico(@RequestBody @Valid DadosAtualizarMedico dadosAtualizarMedico) {
+        medicoService.atualizarDados(dadosAtualizarMedico);
     }
 }

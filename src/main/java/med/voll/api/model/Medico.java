@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.dto.DadosAtualizarMedico;
 import med.voll.api.dto.DadosCadastroMedico;
 
 @Table(name = "medicos")
@@ -34,5 +35,17 @@ public class Medico {
         this.especialidade = dadosParaCadastro.especialidade();
         this.endereco = new Endereco(dadosParaCadastro.endereco());
 
+    }
+
+    public void alterarDados(DadosAtualizarMedico dadosAtualizarMedico) {
+        if (dadosAtualizarMedico.nome() != null){
+            this.nome = dadosAtualizarMedico.nome();
+        }
+        if(dadosAtualizarMedico.telefone() != null){
+            this.telefone = dadosAtualizarMedico.telefone();
+        }
+        if(dadosAtualizarMedico.endereco() != null){
+            this.endereco.atualizarInformacoes(dadosAtualizarMedico.endereco());
+        }
     }
 }
