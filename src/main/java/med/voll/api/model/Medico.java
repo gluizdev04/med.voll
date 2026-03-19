@@ -26,8 +26,10 @@ public class Medico {
     private Especialidade especialidade;
     @Embedded
     private Endereco endereco;
+    private Boolean ativo;
 
     public Medico(DadosCadastroMedico dadosParaCadastro) {
+        this.ativo = true;
         this.nome = dadosParaCadastro.nome();
         this.email = dadosParaCadastro.email();
         this.telefone = dadosParaCadastro.telefone();
@@ -47,5 +49,9 @@ public class Medico {
         if(dadosAtualizarMedico.endereco() != null){
             this.endereco.atualizarInformacoes(dadosAtualizarMedico.endereco());
         }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

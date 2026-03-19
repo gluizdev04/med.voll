@@ -24,11 +24,16 @@ public class MedicoService {
     }
 
     public Page<DadosListagemMedico> mostrarMedicos(Pageable paginacao) {
-        return medicoRepository.findAll(paginacao).map(DadosListagemMedico::new);
+        return medicoRepository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
     }
 
     public void atualizarDados(DadosAtualizarMedico dadosAtualizarMedico) {
         var medico = medicoRepository.getReferenceById(dadosAtualizarMedico.id());
         medico.alterarDados(dadosAtualizarMedico);
+    }
+
+    public void deletarMedico(Long id) {
+        var medico = medicoRepository.getReferenceById(id);
+        medico.excluir();
     }
 }
