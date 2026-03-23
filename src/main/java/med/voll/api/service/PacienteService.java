@@ -1,5 +1,6 @@
 package med.voll.api.service;
 
+import med.voll.api.dto.DadosAtualizarPaciente;
 import med.voll.api.dto.DadosListagemPaciente;
 import med.voll.api.dto.PacienteDTO;
 import med.voll.api.model.Paciente;
@@ -24,5 +25,10 @@ public class PacienteService {
 
     public Page<DadosListagemPaciente> listarPacientes(Pageable paginacao) {
         return pacienteRepository.findAll(paginacao).map(DadosListagemPaciente::new);
+    }
+
+    public void atualizarDados(DadosAtualizarPaciente dadosAtualizarPaciente) {
+        var paciente = pacienteRepository.getReferenceById(dadosAtualizarPaciente.id());
+        paciente.alterarDados(dadosAtualizarPaciente);
     }
 }
