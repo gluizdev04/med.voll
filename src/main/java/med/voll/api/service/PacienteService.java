@@ -24,11 +24,16 @@ public class PacienteService {
     }
 
     public Page<DadosListagemPaciente> listarPacientes(Pageable paginacao) {
-        return pacienteRepository.findAll(paginacao).map(DadosListagemPaciente::new);
+        return pacienteRepository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
     }
 
     public void atualizarDados(DadosAtualizarPaciente dadosAtualizarPaciente) {
         var paciente = pacienteRepository.getReferenceById(dadosAtualizarPaciente.id());
         paciente.alterarDados(dadosAtualizarPaciente);
+    }
+
+    public void inativarPaciente(Long id) {
+        var paciente = pacienteRepository.getReferenceById(id);
+        paciente.excluir();
     }
 }

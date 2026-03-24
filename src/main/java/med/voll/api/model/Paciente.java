@@ -25,6 +25,7 @@ public class Paciente {
     private String cpf;
     @Embedded
     private Endereco endereco;
+    private boolean ativo;
 
     public Paciente(PacienteDTO dadosPaciente) {
         this.nome = dadosPaciente.nome();
@@ -44,5 +45,9 @@ public class Paciente {
         if (dadosAtualizarPaciente.telefone() != null) {
             this.telefone = dadosAtualizarPaciente.telefone();
         }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }
