@@ -19,17 +19,20 @@ public class MedicoService {
         this.medicoRepository = medicoRepository;
     }
 
-    public void cadastrarMedico(DadosCadastroMedico dadosParaCadastro) {
-        medicoRepository.save(new Medico(dadosParaCadastro));
+    public Medico cadastrarMedico(DadosCadastroMedico dadosParaCadastro) {
+        var medico = new Medico(dadosParaCadastro);
+        medicoRepository.save(medico);
+        return medico;
     }
 
     public Page<DadosListagemMedico> mostrarMedicos(Pageable paginacao) {
         return medicoRepository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
     }
 
-    public void atualizarDados(DadosAtualizarMedico dadosAtualizarMedico) {
+    public Medico atualizarDados(DadosAtualizarMedico dadosAtualizarMedico) {
         var medico = medicoRepository.getReferenceById(dadosAtualizarMedico.id());
         medico.alterarDados(dadosAtualizarMedico);
+        return medico;
     }
 
     public void deletarMedico(Long id) {
