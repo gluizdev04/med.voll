@@ -2,6 +2,7 @@ package med.voll.api.service;
 
 import med.voll.api.dto.DadosAtualizarMedico;
 import med.voll.api.dto.DadosCadastroMedico;
+import med.voll.api.dto.DadosDetalhamentoMedicos;
 import med.voll.api.dto.DadosListagemMedico;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
@@ -38,5 +39,11 @@ public class MedicoService {
     public void deletarMedico(Long id) {
         var medico = medicoRepository.getReferenceById(id);
         medico.excluir();
+    }
+
+
+    public DadosDetalhamentoMedicos buscarMedico(Long id) {
+        var medicoEncontrado = medicoRepository.getReferenceById(id);
+        return new DadosDetalhamentoMedicos(medicoEncontrado);
     }
 }

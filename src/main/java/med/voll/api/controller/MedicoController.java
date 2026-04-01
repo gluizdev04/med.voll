@@ -6,7 +6,9 @@ import med.voll.api.dto.DadosCadastroMedico;
 import med.voll.api.dto.DadosDetalhamentoMedicos;
 import med.voll.api.dto.DadosListagemMedico;
 import med.voll.api.model.Medico;
+import med.voll.api.repository.MedicoRepository;
 import med.voll.api.service.MedicoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -32,7 +34,7 @@ public class MedicoController {
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dadosParaCadastro, UriComponentsBuilder uriBuilder) {
         var medico = medicoService.cadastrarMedico(dadosParaCadastro);
 
-        var uri = uriBuilder.path("medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        var uri = uriBuilder.path("medico/{id}").buildAndExpand(medico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedicos(medico));
     }
@@ -55,5 +57,11 @@ public class MedicoController {
     public ResponseEntity deletarMedico(@PathVariable Long id) {
         medicoService.deletarMedico(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity buscarMedicoPorId(@PathVariable Long id) {
+        var medico = medicoService.buscarMedico(id);
+        return ResponseEntity.ok(medico);
     }
 }
