@@ -28,6 +28,7 @@ public class Paciente {
     private boolean ativo;
 
     public Paciente(PacienteDTO dadosPaciente) {
+        this.ativo = true;
         this.nome = dadosPaciente.nome();
         this.email = dadosPaciente.email();
         this.telefone = dadosPaciente.telefone();

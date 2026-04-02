@@ -5,10 +5,7 @@ import med.voll.api.dto.DadosAtualizarMedico;
 import med.voll.api.dto.DadosCadastroMedico;
 import med.voll.api.dto.DadosDetalhamentoMedicos;
 import med.voll.api.dto.DadosListagemMedico;
-import med.voll.api.model.Medico;
-import med.voll.api.repository.MedicoRepository;
 import med.voll.api.service.MedicoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,9 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/medico")
@@ -40,7 +34,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemMedico>> mostrarMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemMedico>> listarPacientes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         var page = medicoService.mostrarMedicos(paginacao);
         return ResponseEntity.ok(page);
     }
@@ -54,7 +48,7 @@ public class MedicoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletarMedico(@PathVariable Long id) {
+    public ResponseEntity inativarMedico(@PathVariable Long id) {
         medicoService.deletarMedico(id);
         return ResponseEntity.noContent().build();
     }

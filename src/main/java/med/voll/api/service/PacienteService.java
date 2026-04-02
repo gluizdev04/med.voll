@@ -1,6 +1,7 @@
 package med.voll.api.service;
 
 import med.voll.api.dto.DadosAtualizarPaciente;
+import med.voll.api.dto.DadosDetalhamentoPeciantes;
 import med.voll.api.dto.DadosListagemPaciente;
 import med.voll.api.dto.PacienteDTO;
 import med.voll.api.model.Paciente;
@@ -19,21 +20,28 @@ public class PacienteService {
         this.pacienteRepository = pacienteRepository;
     }
 
-    public void cadastrarPaciente(PacienteDTO dadosPaciente){
-        pacienteRepository.save(new Paciente(dadosPaciente));
+    public Paciente cadastrarPaciente(PacienteDTO dadosPaciente){
+        Paciente pacienteSalvo = pacienteRepository.save(new Paciente(dadosPaciente));
+        return pacienteSalvo;
     }
 
     public Page<DadosListagemPaciente> listarPacientes(Pageable paginacao) {
         return pacienteRepository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
     }
 
-    public void atualizarDados(DadosAtualizarPaciente dadosAtualizarPaciente) {
+    public Paciente atualizarDados(DadosAtualizarPaciente dadosAtualizarPaciente) {
         var paciente = pacienteRepository.getReferenceById(dadosAtualizarPaciente.id());
         paciente.alterarDados(dadosAtualizarPaciente);
+        return paciente;
     }
 
     public void inativarPaciente(Long id) {
         var paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();
+    }
+
+    public DadosDetalhamentoPeciantes buscarPacientePorId(Long id) {
+        Paciente pacienteEncontrado = pacienteRepository.getReferenceById(id);
+        return new DadosDetalhamentoPeciantes(pacienteEncontrado);
     }
 }
